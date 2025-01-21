@@ -2,7 +2,17 @@ const Order = require('../models/orderModel');
 const Product = require('../models/productModel');
 
 class OrderService {
-  async createOrder(productId, quantity) {
+  async createOrder(productList) {
+     productList.map(async (product) => {
+      console.log('product', product);
+      const { productId, quantity } = product;
+      const productData = await Product.getById(productId);
+      if (!productData) {
+        throw new Error('Product not found!');
+      }
+      const totalPrice = productData.price * quantity;
+      return Order.create(productId, quantity, totalPrice);
+    });
     const product = await Product.getById(productId);
     if (!product) {
       throw new Error('Product not found!');
