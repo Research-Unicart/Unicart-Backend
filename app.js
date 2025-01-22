@@ -6,16 +6,25 @@ const productController = require("./controllers/productController");
 const orderController = require("./controllers/orderController");
 
 const app = express();
-const port = 3000;
+// const port = 3000;
+
+// app.use(
+//   cors({
+//     origin: "http://localhost:3001",
+//     methods: ["GET", "POST", "PUT", "DELETE"],
+//     allowedHeaders: ["Content-Type"],
+//   })
+// );
+
+const port = process.env.PORT || 3000; 
 
 app.use(
   cors({
-    origin: "http://localhost:3001",
+    origin: process.env.CORS_ORIGIN || "http://localhost:3001", 
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type"],
   })
 );
-
 app.use(bodyParser.json());
 
 app.use((req, res, next) => {
