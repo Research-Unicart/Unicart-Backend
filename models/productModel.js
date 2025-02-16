@@ -167,6 +167,11 @@ class Product {
     }
   }
 
+  async getVariationById(id) {
+    const query = "SELECT * FROM product_variations WHERE id = ?";
+    return db.query(query, [id]);
+  }
+
   async delete(id) {
     const query = "DELETE FROM product WHERE id = ?";
     return db.query(query, [id]);

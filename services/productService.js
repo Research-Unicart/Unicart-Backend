@@ -17,6 +17,14 @@ class ProductService {
     return product;
   }
 
+  async getVariationById(id) {
+    const variation = await Product.getVariationById(id);
+    if (!variation) {
+      throw new Error("Variation not found");
+    }
+    return variation;
+  }
+
   async updateProduct(id, productData) {
     await this.getProductById(id);
     return Product.update(id, productData);
