@@ -11,7 +11,20 @@ const port = process.env.PORT || 3000;
 
 app.use(
   cors({
-    origin: process.env.CORS_ORIGIN || "http://localhost:3001",
+    origin: function(origin, callback) {
+      const allowedOrigins = [
+        'http://localhost:3000',  // React
+        'http://localhost:3001',  // Current allowed origin
+        'http://localhost:8080',  // Vue
+        'http://localhost:4200'   // Angular
+      ];
+      
+      if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: [
       "Content-Type",
